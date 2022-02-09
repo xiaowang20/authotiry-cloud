@@ -1,0 +1,43 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: user-server
+  #nacos配置
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        group: ${spring.application.name}
+        namespace: 80b60216-6a6d-467d-a8bc-e4a4d2d22495
+  redis:
+    host: 8.142.75.46
+    port: 6379
+    password: Wg430682
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 1
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8
+        #连接池中的最小空闲连接
+        min-idle: 0
+      #连接超时时间（毫秒）
+    timeout: 30000
+  datasource:
+    password: 1234
+    name: root
+    url: jdbc:mysql://localhost:3306/authority-study?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: D340C6ED1B7444298348FFA913E6CF55F00892AD0D954EC4BA722249854AF4E67C9707321CB6478CB113CE1A952220F68E76D2CEB23A49BEBA7971CC0A0F771AA080EA6990AB71A080EA6990AB7FA39 #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+
+  main:
+    allow-bean-definition-overriding: true

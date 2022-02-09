@@ -1,0 +1,35 @@
+#启动端口
+server:
+  port: 8222
+spring:
+  application:
+    name: authority-gateway
+  cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        file-extension: yml
+
+    #关闭Spring自带的X-Forwarded-Prefix设置
+    #gateway配置
+    gateway:
+      x-forwarded:
+        prefix-enabled: false
+        #服务注册
+      routes:
+        - id: user-route
+          uri: lb://api/admin # lb://serviceId
+          predicates:
+            - Path=/api/admin/** # 路径匹配
+          filters:
+            - StripPrefix=1
+
+  main:
+    allow-bean-definition-overriding: true #意思是后来发现的bean会覆盖之前相同名称的bean
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

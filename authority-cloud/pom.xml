@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wg</groupId>
+    <artifactId>authority-cloud</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>authority-common</module>
+        <module>authority-gateway</module>
+        <module>authority-user</module>
+        <module>authority-generate</module>
+    </modules>
+    <name>authority-cloud</name>
+    <description>微服务学习</description>
+
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <openfeign.version>2.2.0.RELEASE</openfeign.version>
+        <swagger.version>2.9.2</swagger.version>
+        <mysql.version>8.0.22</mysql.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <mybatis-dynamic-sql.version>1.1.4</mybatis-dynamic-sql.version>
+        <pagehelper.version>1.2.5</pagehelper.version>
+        <sharding.jdbc.version>3.0.0</sharding.jdbc.version>
+        <jjwt.version>0.10.6</jjwt.version>
+        <redis.version>1.4.1.RELEASE</redis.version>
+        <redisson.version>3.12.5</redisson.version>
+        <admin-starter-server.version>2.2.3</admin-starter-server.version>
+        <orderbyhelper.version>1.0.2</orderbyhelper.version>
+        <elasticsearch.version>7.9.3</elasticsearch.version>
+        <logstash.version>5.3</logstash.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <bootstrap.version>2.1.2.RELEASE</bootstrap.version>
+
+
+
+<!--      authority-cloud相关模块版本  -->
+
+        <common-util.version>0.0.1-SNAPSHOT</common-util.version>
+        <user-api.version>0.0.1-SNAPSHOT</user-api.version>
+    </properties>
+
+    <dependencies>
+<!--    <dependency>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-aop</artifactId>-->
+<!--    </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    </dependencies>
+
+
+
+    <dependencyManagement>
+
+        <dependencies>
+            <!--        authority-cloud相关模块-->
+            <dependency>
+                <groupId>com.wg</groupId>
+                <artifactId>common-util</artifactId>
+                <version>${common-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wg</groupId>
+                <artifactId>user-api</artifactId>
+                <version>${user-api.version}</version>
+            </dependency>
+            <!--在2.2.0.RELEASE里有一行注释描述，feign的SentinelContractHolder接口方法名parseAndValidatateMetadata拼写错误，
+         在2.2.2.RELEASE方法已修正了，即方法名发生了改变。
+         在spring-cloud-alibaba-sentinel中的SentinelContractHolder类，用到了该接口的这个方法
+         所以，要么降低SpringCloud版本，要么单独指定openfeign版本，否则启动报错
+         java.lang.AbstractMethodError:
+         com.alibaba.cloud.sentinel.feign.SentinelContractHolder.
+         parseAndValidateMetadata(Ljava/lang/Class;)Ljava/util/List
+         注意spring-cloud-openfeign-dependencies写在spring-cloud-dependencies前面，
+         因为dependency前面的优先生效。-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign-dependencies</artifactId>
+                <version>${openfeign.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--bootstrap相关依赖-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-context</artifactId>
+                <version>${bootstrap.version}</version>
+
+            </dependency>
+            <!-- springCloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!--swagger ui-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+
+
+            <!--mysql驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!--mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- MyBatis 生成器 -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!--mybatis动态sql-->
+            <dependency>
+                <groupId>org.mybatis.dynamic-sql</groupId>
+                <artifactId>mybatis-dynamic-sql</artifactId>
+                <version>${mybatis-dynamic-sql.version}</version>
+            </dependency>
+
+            <!--分页助手启动器-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- sharding jdbc依赖 -->
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding.jdbc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-namespace</artifactId>
+                <version>${sharding.jdbc.version}</version>
+            </dependency>
+            <!-- jwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <scope>runtime</scope>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!--redis-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!--集成SpringBoot Admin监控-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${admin-starter-server.version}</version>
+            </dependency>
+            <!--排序助手启动器-->
+            <dependency>
+                <groupId>com.cuisongliu</groupId>
+                <artifactId>orderbyhelper-spring-boot-starter</artifactId>
+                <version>${orderbyhelper.version}</version>
+            </dependency>
+            <!--elasticsearch -->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.searchbox</groupId>
+                <artifactId>jest</artifactId>
+                <version>${jest.version}</version>
+            </dependency>
+
+            <!--集成logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.7.RELEASE</version>
+                <configuration>
+                    <mainClass>com.wg.authratorcloud.AuthratorCloudApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

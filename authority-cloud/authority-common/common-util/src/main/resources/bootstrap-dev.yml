@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        group: ${spring.application.name}
+        namespace: 80b60216-6a6d-467d-a8bc-e4a4d2d22495

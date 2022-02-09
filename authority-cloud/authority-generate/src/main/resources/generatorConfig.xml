@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--根节点-->
+<generatorConfiguration>
+    <!--Mybatis Generator目前有5种运行模式，分别为：MyBatis3DynamicSql、MyBatis3Kotlin、MyBatis3、MyBatis3Simple、MyBatis3DynamicSqlV1。-->
+<!--驱动的路径-->
+    <classPathEntry location="D:\Environment\MAVEN-app\apache-maven-3.6.3\maven-repo\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar"/>
+<!--用于指定生成一组对象的环境-->
+<!-- targetRuntime   此属性用于指定生成的代码的运行时环境-->
+    <context id="authority-cloud" targetRuntime="MyBatis3DynamicSql" defaultModelType="flat">
+<!--commentGenerator 具体就是生成表或字段的备注信息-->
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+<!--suppressAllComments 阻止**生成注释-->
+            <property name="suppressAllComments" value="false"/>
+<!--addRemarkComments 添加备注 -->
+            <property name="addRemarkComments" value="true"/>
+<!-- suppressDate  阻止**生成的注释包含时间戳-->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+<!--jdbcConnection 用于指定数据库连接信息-->
+        <jdbcConnection
+                connectionURL="jdbc:mysql://127.0.0.1:3306/authority-study?tinyInt1isBit=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai&amp;nullCatalogMeansCurrent=true"
+                driverClass="com.mysql.cj.jdbc.Driver"
+                password="1234"
+                userId="root" />
+<!--javaTypeResolver 来指定JDBC类型和Java类型如何转换-->
+        <javaTypeResolver>
+            <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，
+             为 true时把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal 一般不需要配置
+             如果精度>0或者长度>18，就会使用java.math.BigDecimal
+            如果精度=0并且10<=长度<=18，就会使用java.lang.Long
+            如果精度=0并且5<=长度<=9，就会使用java.lang.Integer
+            如果精度=0并且长度<5，就会使用java.lang.Short-->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+<!--javaModelGenerator 用来控制生成的实体类-->
+        <!-- targetPackage 生成实体类存放的包名-->
+        <!-- targetProject:指定目标项目路径 -->
+        <javaModelGenerator
+                targetPackage="com.wg.authority.user.entity"
+                targetProject="E:\repo\authority-cloud\authority-user\user-api\src\main\java">
+            <!-- enableSubPackages:如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <!-- 是否对数据库查询结果进行trim操作，如果设置为true就会生成类似这样public void setUsername(String username) {this.username = username == null ? null : username.trim();}的setter方法。默认值为false。-->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- targetProject:mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mybatis.mapping"
+                         targetProject="E:\repo\authority-cloud\authority-user\user-server\src\main\resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                targetPackage="com.wg.authority.user.mapper"
+                targetProject="E:\repo\authority-cloud\authority-user\user-server\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+<!--生成全部表tableName设为%-->
+        <!--generatedKey 用来指定自动生成主键的属性（identity字段或者sequences序列）-->
+        <!-- column 生成列的列名  -->
+        <!-- sqlStatement 将返回新值的 SQL 语句-->
+        <table tableName="%">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+
+
+        <!-- 指定数据库表 -->
+<!--        <table schema="jly" tableName="job_position" domainObjectName="JobPositionTest"/>-->
+    </context>
+</generatorConfiguration>

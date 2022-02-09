@@ -1,0 +1,39 @@
+# 将所有数字转为 String 类型返回，避免前端数据精度丢失的问题
+jackson:
+  generator:
+    write-numbers-as-strings: true
+
+
+mybatis:
+  configuration:
+    #自动将数据库带下划线的表字段值映射到Java类的驼峰字段上
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mybatis/mapping/*.xml
+  type-aliases-package: com.wg.authority.*.entity
+#日志
+logging:
+  config: classpath:logback-boot.xml
+#允许bean定义重写
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    #mysql配置
+  datasource:
+    name: root
+    data-password: 1234
+    url: jdbc:mysql://127.0.0.1:3306/authority-study?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#客户端
+feign:
+  httpclient:
+    enabled: true
+#关掉mq的健康检查，防止某些没有用到mq的服务启动报错，个别服务如需mq监控，单独开启
+management:
+  health:
+    rabbit:
+      enabled: false
+
+
+
+
+
